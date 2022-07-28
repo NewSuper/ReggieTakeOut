@@ -1,4 +1,4 @@
-package com.tqxd.reggie;
+package cn.tqxd.reggie;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @ServletComponentScan
 @EnableTransactionManagement
-public class DemoApplication {
-    //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
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+public class ReggieApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ReggieApplication.class, args);
+    }
 
 }

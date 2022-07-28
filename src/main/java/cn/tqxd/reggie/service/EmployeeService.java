@@ -1,7 +1,8 @@
-package com.tqxd.reggie.service;
+package cn.tqxd.reggie.service;
 
+import cn.tqxd.reggie.entity.Employee;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.tqxd.reggie.entity.Employee;
 
 public interface EmployeeService extends IService<Employee> {
+
 }

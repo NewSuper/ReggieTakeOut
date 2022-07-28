@@ -1,21 +1,22 @@
 spring:
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${DATABASE_NAME}?characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: ${MYSQL_USER_NAME}
-    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://mysql.im.test:3306/haoke?characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: huke123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   profiles:
     active: dev
   application:
     name: ruijiTakeOut
   flyway:
-    enabled: true
+    enabled: false
     encoding: UTF-8
     locations: classpath:db/migration
     sqlMigrationPrefix: V
     sqlMigrationSeparator: __
     validateOnMigrate: true
     baselineOnMigrate: true
+
   redis:
     username: root
     password:
@@ -31,7 +32,7 @@ mybatis-plus:
     db-config:
       id-type: ASSIGN_ID
 server:
-  port: ${APPLICATION_PORT}
+  port: 8080
 aliyun:
   secret: ${ALIYUN_SECRET}
   accessKeyId: ${ALIYUN_ACCESSKEYID}}

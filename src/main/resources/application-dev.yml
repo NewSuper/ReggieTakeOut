@@ -2,7 +2,7 @@ spring:
   config:
     import: optional:file:.env.dev[.properties]
 reggie:
-  path:/src/main/resources/static/images
+  path:/src/main/resources/images
 aliyun:
   secret: ${ALIYUN_SECRET}
   accessKeyId: ${ALIYUN_ACCESSKEYID}}

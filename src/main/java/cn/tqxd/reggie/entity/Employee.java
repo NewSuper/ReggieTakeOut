@@ -1,4 +1,5 @@
-package com.tqxd.reggie.entity;
+package cn.tqxd.reggie.entity;
+
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -6,6 +7,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+/**员工实体*/
 @Data
 public class Employee implements Serializable {
 

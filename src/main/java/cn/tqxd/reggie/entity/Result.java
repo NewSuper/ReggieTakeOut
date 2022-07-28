@@ -1,10 +1,10 @@
-package com.tqxd.reggie.vo;
-
-import java.util.HashMap;
+package cn.tqxd.reggie.entity;
 
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.Map;
+
 @Data
 public class Result<T> {
 
