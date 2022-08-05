@@ -86,14 +86,11 @@ public class EmployeeController {
         //设置初始密码123456，需要进行md5加密处理
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
 
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        //获得当前登录用户的id
-        Long empId = (Long) request.getSession().getAttribute("employee");
-
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+     //   employee.setCreateTime(LocalDateTime.now());
+     //   employee.setUpdateTime(LocalDateTime.now());   执行MyMetaObjectHandler
+     //   Long empId = (Long) request.getSession().getAttribute("employee");
+     //   employee.setCreateUser(empId);
+    //    employee.setUpdateUser(empId); 执行MyMetaObjectHandler
 
         employeeService.save(employee);
 
@@ -102,59 +99,64 @@ public class EmployeeController {
 
     /**
      * 员工信息分页查询
+     *
      * @param page
      * @param pageSize
      * @param name
      * @return
      */
     @GetMapping(value = {"/page"})
-    public Result<Page<Employee>>page(int page,int pageSize,String name){
+    public Result<Page<Employee>> page(int page, int pageSize, String name) {
         log.info("page = {},pageSize = {},name = {}", page, pageSize, name);
         //构建分页构造器
-        Page<Employee>pageInfo = new Page<>(page,pageSize);
+        Page<Employee> pageInfo = new Page<>(page, pageSize);
         //构建条件构造器
-        LambdaQueryWrapper<Employee>queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
         //添加过滤条件
-        queryWrapper.like(StringUtils.isNotEmpty(name),Employee::getName,name);
+        queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
         //添加排序条件
         queryWrapper.orderByDesc(Employee::getUpdateTime);
         //执行查询
-        employeeService.page(pageInfo,queryWrapper);
+        employeeService.page(pageInfo, queryWrapper);
         return Result.success(pageInfo);
     }
 
     /**
      * 根据id修改员工信息
+     *
      * @param request
      * @param employee
      * @return
      */
     @PutMapping(value = {""})
-    public Result<String>update(HttpServletRequest request,@RequestBody Employee employee){
+    public Result<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info(employee.toString());
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(empId);
+
+//        Long empId = (Long) request.getSession().getAttribute("employee");   执行MyMetaObjectHandler
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(empId);
         employeeService.updateById(employee);
         return Result.success("员工信息修改成功");
     }
 
     /**
      * 根据id查询员工信息
+     *
      * @param id
      * @return
      */
     @GetMapping(value = {"/{id}"})
-    public Result<Employee>getById(@PathVariable Long id){
+    public Result<Employee> getById(@PathVariable Long id) {
         log.info("根据id查询员工信息");
         Employee employee = employeeService.getById(id);
-        if (employee != null){
+        if (employee != null) {
             return Result.success(employee);
         }
         return Result.error("没有查询到对应员工信息");
     }
+
     @Autowired
-    public void setEmployeeService(EmployeeService employeeService){
+    public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 }
