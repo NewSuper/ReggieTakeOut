@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @ServletComponentScan
-@EnableTransactionManagement
+@EnableTransactionManagement   //允许事务
 public class ReggieApplication {
 
     public static void main(String[] args) {

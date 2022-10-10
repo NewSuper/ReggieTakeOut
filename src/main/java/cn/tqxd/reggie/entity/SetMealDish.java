@@ -1,5 +1,6 @@
 package cn.tqxd.reggie.entity;
 
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-//套餐菜品关系
+/** 套餐菜品关系*/
 @Data
 public class SetMealDish implements Serializable {
 
@@ -58,4 +59,3 @@ public class SetMealDish implements Serializable {
     //是否删除
     private Integer isDeleted;
 }
-

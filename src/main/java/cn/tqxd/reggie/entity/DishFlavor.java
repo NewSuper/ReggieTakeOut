@@ -1,13 +1,14 @@
 package cn.tqxd.reggie.entity;
 
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-//菜品口味
+
+/**菜品口味*/
 @Data
 public class DishFlavor implements Serializable {
 

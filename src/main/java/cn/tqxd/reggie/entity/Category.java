@@ -6,9 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
 //分类
-
 @Data
 public class Category implements Serializable {
 
@@ -63,3 +61,4 @@ public class Category implements Serializable {
     private Long updateUser;
 
 }
+

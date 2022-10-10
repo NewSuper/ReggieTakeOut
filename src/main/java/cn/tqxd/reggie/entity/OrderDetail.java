@@ -6,7 +6,8 @@ import lombok.Data;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-//订单详情
+/**订单明细*/
+
 @Data
 public class OrderDetail implements Serializable {
 
@@ -42,4 +43,3 @@ public class OrderDetail implements Serializable {
     //图片
     private String image;
 }
-

@@ -1,10 +1,13 @@
 package cn.tqxd.reggie.entity;
+
+
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-//购物车
+
+/**购物车*/
 @Data
 public class ShoppingCart implements Serializable {
 
@@ -38,4 +41,3 @@ public class ShoppingCart implements Serializable {
 
     private LocalDateTime createTime;
 }
-

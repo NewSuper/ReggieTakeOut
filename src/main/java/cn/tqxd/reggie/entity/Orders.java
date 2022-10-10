@@ -1,15 +1,13 @@
 package cn.tqxd.reggie.entity;
 
-import lombok.Data;
 
-import java.io.Serializable;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+/**订单*/
 @Data
 public class Orders implements Serializable {
 
@@ -61,5 +59,4 @@ public class Orders implements Serializable {
     //收货人
     private String consignee;
 }
-
 
