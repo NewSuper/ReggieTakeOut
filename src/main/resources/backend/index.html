@@ -44,9 +44,9 @@
                         :collapse-transition="false"
                         background-color="#343744"
                         text-color="#bfcbd9"
-                        active-text-color="#f4f4f5"
-                >
+                        active-text-color="#f4f4f5">
                     <div v-for="item in menuList" :key="item.id">
+                        <!--v-if 不会成立-->
                         <el-submenu :index="item.id" v-if="item.children && item.children.length>0">
                             <template slot="title">
                                 <i class="iconfont" :class="item.icon"></i>
@@ -56,12 +56,10 @@
                                     v-for="sub in item.children"
                                     :index="sub.id"
                                     :key="sub.id"
-                                    @click="menuHandle(sub,false)"
-                            >
+                                    @click="menuHandle(sub,false)">
                                 <i :class="iconfont" :class="sub.icon"></i>
                                 <span slot="title">{{sub.name}}</span>
-                            </el-menu-item
-                            >
+                            </el-menu-item>
                         </el-submenu>
                         <el-menu-item v-else :index="item.id" @click="menuHandle(item,false)">
                             <i class="iconfont" :class="item.icon"></i>
@@ -76,8 +74,7 @@
             <div class="navbar">
                 <div class="head-lable">
               <span v-if="goBackFlag" class="goBack" @click="goBack()"
-              ><img src="images/icons/btn_back@2x.png" alt=""/> 返回</span
-              >
+              ><img src="images/icons/btn_back@2x.png" alt=""/> 返回</span>
                     <span>{{headTitle}}</span>
                 </div>
                 <div class="right-menu">
@@ -157,8 +154,8 @@
                     //   ],
                     // },
                 ],
-                iframeUrl: 'page/member/list.html',
-                headTitle: '员工管理',
+                iframeUrl: 'page/member/list.html',   //初始页面
+                headTitle: '员工管理',  //初始页面title
                 goBackFlag: false,
                 loading: true,
                 timer: null

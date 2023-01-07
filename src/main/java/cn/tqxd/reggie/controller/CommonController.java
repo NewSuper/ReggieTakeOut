@@ -27,7 +27,7 @@ public class CommonController {
     /**
      * 文件上传
      *
-     * @param file
+     * @param file   参数必须是file   约定好的
      * @return
      */
     @PostMapping("/upload")
@@ -71,15 +71,16 @@ public class CommonController {
 
         try {
             //输入流，通过输入流读取文件内容
-            FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+            FileInputStream fileInputStream = new FileInputStream(basePath + name);
 
             //输出流，通过输出流将文件写回浏览器
             ServletOutputStream outputStream = response.getOutputStream();
 
-            response.setContentType("image/jpeg");
+            response.setContentType("image/jpg");
 
             int len = 0;
             byte[] bytes = new byte[1024];
+            //(len = fileInputStream.read(bytes)) != -1  不等于-1  说明没读完
             while ((len = fileInputStream.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, len);
                 outputStream.flush();

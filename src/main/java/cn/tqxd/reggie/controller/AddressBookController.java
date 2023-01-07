@@ -16,13 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/addressBook")
 public class AddressBookController {
-
-    private AddressBookService addressBookService;
-
     @Autowired
-    public void setAddressBookService(AddressBookService addressBookService) {
-        this.addressBookService = addressBookService;
-    }
+    private AddressBookService addressBookService;
 
     /**
      * 新增地址

@@ -24,15 +24,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/dish")
 @Slf4j
 public class DishController {
-
+    @Autowired
     private DishService dishService;
 
-
+    @Autowired
     private DishFlavorService dishFlavorService;
 
-
+    @Autowired
     private CategoryService categoryService;
-
+    @Autowired
     private RedisTemplate redisTemplate;
 
     /**
@@ -190,23 +190,4 @@ public class DishController {
         return Result.success(dishDtoList);
     }
 
-    @Autowired
-    public void setDishService(DishService dishService) {
-        this.dishService = dishService;
-    }
-
-    @Autowired
-    public void setDishFlavorService(DishFlavorService dishFlavorService) {
-        this.dishFlavorService = dishFlavorService;
-    }
-
-    @Autowired
-    public void setCategoryService(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
-
-    @Autowired
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
 }

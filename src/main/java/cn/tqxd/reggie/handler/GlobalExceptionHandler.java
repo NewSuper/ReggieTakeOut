@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
      *
      * @return
      */
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)  //sql 异常
     public Result<String>exceptionHandler(SQLIntegrityConstraintViolationException ex){
         log.error(ex.getMessage());
 

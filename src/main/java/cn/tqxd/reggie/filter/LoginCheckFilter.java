@@ -12,14 +12,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebFilter(filterName = "loginCheckFilter",urlPatterns = {"/*"})
+/**
+ * 完善登录功能
+ * 问题分析
+ * 如果用户不登录,直接访问系统首页，照样可正常访问，不合理
+ * 解决方案：
+ * 1.创建自定义过滤器LoginCheckFilter
+ * 2.在启动类上加上注解@ServletComponentScan
+ * 3.完善过滤器的处理逻辑
+ */
+@WebFilter(filterName = "loginCheckFilter",urlPatterns = {"/*"})  //   代表拦截所有,可后面再细分过滤/*
 @Slf4j
 public class LoginCheckFilter implements Filter{
 
     //路径匹配器.支持通配符
     public static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
+    /**
+     * 操作步骤:
+     * 1.获取本次请求的uri  例如：/backend/index.html
+     * 2.判断本次请求是否需要处理
+     * 3.如不需要处理，直接放行
+     * 4-1 判断后台系统登录状态。如已登录，直接放行
+     * 4-2 判断app端登录状态。如已登录，直接放行
+     * 5 如果未登录则返回未登录结果，通过输出流的方式向客户端响应数据
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -31,13 +48,13 @@ public class LoginCheckFilter implements Filter{
 
         //定义不需要处理的请求路径
         String[] urls = new String[]{
-                "/employee/login",
-                "/employee/logout",
-                "/backend/**",
-                "/front/**",
-                "/common/**",
-                "/user/sendMsg",
-                "/user/login"
+                "/employee/login",//登录
+                "/employee/logout",//退出
+                "/backend/**",//页面是可以看的，主要是控制ajax请求
+                "/front/**",//页面是可以看的，主要是控制ajax请求
+                "/common/**",//
+                "/user/sendMsg",//
+                "/user/login"//
         };
 
         //2.判断本次请求是否需要处理

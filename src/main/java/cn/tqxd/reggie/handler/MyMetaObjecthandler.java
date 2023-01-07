@@ -7,7 +7,12 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-
+/**
+ * 公共字段自动填充
+ * 实现步骤：
+ * 1.在实体类中的属性上加入@TableField注解，指定自动填充的策略
+ * 2.按照框架要求编写元数据处理器，需实现MetaObjectHandler接口
+ */
 /**
  * 自定义源数据对象处理器
  */

@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@ServletComponentScan
+@ServletComponentScan   //扫描 LoginCheckFilter 的过滤器
 @EnableTransactionManagement   //允许事务
 public class ReggieApplication {
 

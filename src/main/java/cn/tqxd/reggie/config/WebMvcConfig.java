@@ -21,14 +21,16 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
      */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        log.info("开始进行静态资源映射...");
-        registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/static/backend/");
-        registry.addResourceHandler("/front/**").addResourceLocations("classpath:/static/front/");
+        log.info("开始进行静态资源映射...,根据自己项目实际情况来定。坑死");
+        // registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/static/backend/");
+        // registry.addResourceHandler("/front/**").addResourceLocations("classpath:/static/front/");
+        registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
+        registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
     }
 
     /**
      * 扩展mvc框架的消息转换器
-     *
+     *   对时间戳相关  createTime 做转换
      * @param converters
      */
     @Override

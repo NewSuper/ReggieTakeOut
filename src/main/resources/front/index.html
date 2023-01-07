@@ -155,8 +155,7 @@
                   :show-confirm-button="false"
                   class="detailsDialog"
                   ref="detailsDialog"
-                  v-if="detailsDialog.show"
-      >
+                  v-if="detailsDialog.show">
           <div class="divContainer">
               <el-image :src="imgPathConvert(detailsDialog.item.image)">
                   <div slot="error" class="image-slot">
@@ -192,8 +191,7 @@
                   :show-confirm-button="false"
                   class="setMealDetailsDialog"
                   ref="setMealDetailsDialogd"
-                  v-if="setMealDialog.show"
-      >
+                  v-if="setMealDialog.show">
           <div class="divContainer">
               <div class="title">{{setMealDialog.item.name}}</div>
               <div class="item" v-for="(item,index) in setMealDialog.item.list" :key="index">
@@ -242,7 +240,6 @@
   <script src="./js/request.js"></script>
   <script src="./js/common.js"></script>
   <script src="./api/main.js"></script>
-  </body>
   <script>
       new Vue({
           el: '#main',
@@ -615,4 +612,5 @@
           }
       })
   </script>
+  </body>
 </html>

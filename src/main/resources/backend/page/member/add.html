@@ -123,7 +123,7 @@
         created() {
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
-            if (this.id) {
+            if (this.id) {  //如果id 有值的话，就初始化
                 this.init()
             }
         },

@@ -7,6 +7,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 封装页面提交的数据。实现dish表所有
+ */
 @Data
 public class DishDto extends Dish {
 

@@ -18,12 +18,14 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping(value = {"/employee"})
 public class EmployeeController {
+    @Autowired
     private EmployeeService employeeService;
 
     /**
      * 员工登录
+     * HttpServletRequest  存储到session 使用
      *
-     * @param request
+     * @param request  json参数形式{"username:xxx","password:xxx"}
      * @param employee
      * @return
      */
@@ -74,11 +76,11 @@ public class EmployeeController {
 
     /**
      * 新增员工
-     *
+     *   其实就是将我们新增页面录入的员工数据插入到employee表， employee表的username字段加了unique唯一约束，必须唯一，不可重复
      * @param employee
      * @return
      */
-    @PostMapping(value = {""})
+    @PostMapping
     public Result<String> save(HttpServletRequest request, @RequestBody Employee employee) {
         log.info("新增员工，员工信息：{}", employee.toString());
 
@@ -129,11 +131,11 @@ public class EmployeeController {
 
     /**
      * 根据id修改员工信息
-     *
+     *   只有admin 可对普通用户进行启用，禁用
      * @param employee
      * @return
      */
-    @PutMapping(value = {""})
+    @PutMapping
     public Result<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info(employee.toString());
 
@@ -152,17 +154,12 @@ public class EmployeeController {
      * @return
      */
     @GetMapping(value = {"/{id}"})
-    public Result<Employee> getById(@PathVariable Long id) {
+    public Result<Employee> getById(@PathVariable Long id) {  //@PathVariable  路径变量
         log.info("根据id查询员工信息...");
         Employee employee = employeeService.getById(id);
         if (employee != null) {
             return Result.success(employee);
         }
         return Result.error("没有查询到对应员工信息");
-    }
-
-    @Autowired
-    public void setEmployeeService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
     }
 }
