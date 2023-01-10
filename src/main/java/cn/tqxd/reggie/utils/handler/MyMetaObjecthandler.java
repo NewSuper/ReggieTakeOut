@@ -1,4 +1,4 @@
-package cn.tqxd.reggie.handler;
+package cn.tqxd.reggie.utils.handler;
 
 import cn.tqxd.reggie.utils.BaseContext;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;

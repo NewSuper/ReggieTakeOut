@@ -3,7 +3,7 @@ package cn.tqxd.reggie.service.impl;
 import cn.tqxd.reggie.entity.Category;
 import cn.tqxd.reggie.entity.Dish;
 import cn.tqxd.reggie.entity.SetMeal;
-import cn.tqxd.reggie.exception.CustomException;
+import cn.tqxd.reggie.utils.exception.CustomException;
 import cn.tqxd.reggie.mapper.CategoryMapper;
 import cn.tqxd.reggie.service.CategoryService;
 import cn.tqxd.reggie.service.DishService;
@@ -15,20 +15,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
-
+    @Autowired
     private DishService dishService;
+    @Autowired
     private SetMealService setMealService;
 
-
-    @Autowired
-    public void setDishService(DishService dishService) {
-        this.dishService = dishService;
-    }
-
-    @Autowired
-    public void setSetMealService(SetMealService setMealService) {
-        this.setMealService = setMealService;
-    }
 
     /**
      * 根据id 删除分类，删除之前要判断

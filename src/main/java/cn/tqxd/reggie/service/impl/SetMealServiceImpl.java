@@ -3,7 +3,7 @@ package cn.tqxd.reggie.service.impl;
 import cn.tqxd.reggie.dto.SetMealDto;
 import cn.tqxd.reggie.entity.SetMeal;
 import cn.tqxd.reggie.entity.SetMealDish;
-import cn.tqxd.reggie.exception.CustomException;
+import cn.tqxd.reggie.utils.exception.CustomException;
 import cn.tqxd.reggie.mapper.SetMealMapper;
 import cn.tqxd.reggie.service.SetMealDishService;
 import cn.tqxd.reggie.service.SetMealService;
@@ -18,19 +18,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class SetMealServiceImpl extends ServiceImpl<SetMealMapper, SetMeal> implements SetMealService {
-    private SetMealDishService setMealDishService;
-
     @Autowired
-    public void setSetMealDishService(SetMealDishService setMealDishService) {
-        this.setMealDishService = setMealDishService;
-    }
+    private SetMealDishService setMealDishService;
 
     /**
      * 新增套餐，同时需要保存套餐和菜品关联关系
      *
      * @param setMealDto
      */
-    @Transactional
+    @Transactional   //需要操作2张表，所以需要加事务注解
     @Override
     public void saveWithDish(SetMealDto setMealDto) {
         //保存套餐的基本信息.操作setmeal,执行insert

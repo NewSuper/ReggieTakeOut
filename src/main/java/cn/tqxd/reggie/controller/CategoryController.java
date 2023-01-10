@@ -2,7 +2,7 @@ package cn.tqxd.reggie.controller;
 
 import cn.tqxd.reggie.entity.Category;
 import cn.tqxd.reggie.service.CategoryService;
-import cn.tqxd.reggie.vo.Result;
+import cn.tqxd.reggie.entity.R;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +30,10 @@ public class CategoryController {
      * @return
      */
     @PostMapping
-    public Result<String> save(@RequestBody Category category) {
+    public R<String> save(@RequestBody Category category) {
         log.info("category:{}", category);
         categoryService.save(category);
-        return Result.success("新增分类成功");
+        return R.success("新增分类成功");
     }
 
     /**
@@ -44,12 +44,12 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/page")
-    public Result<Page<Category>> page(int page, int pageSize) {
+    public R<Page<Category>> page(int page, int pageSize) {
         Page<Category> pageInfo = new Page<>(page, pageSize);
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(Category::getSort);
         categoryService.page(pageInfo, queryWrapper);
-        return Result.success(pageInfo);
+        return R.success(pageInfo);
     }
 
     /**
@@ -58,12 +58,12 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/list")
-    public Result<List<Category>> list(Category category) {
+    public R<List<Category>> list(Category category) {
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
         queryWrapper.orderByDesc(Category::getSort).orderByDesc(Category::getUpdateTime);
         List<Category> list = categoryService.list(queryWrapper);
-        return Result.success(list);
+        return R.success(list);
     }
 
     /**
@@ -73,12 +73,12 @@ public class CategoryController {
      * @return
      */
     @PutMapping
-    public Result<String> update(@RequestBody Category category) {
+    public R<String> update(@RequestBody Category category) {
         log.info("修改分类信息：{}", category);
 
         categoryService.updateById(category);
 
-        return Result.success("修改分类信息成功");
+        return R.success("修改分类信息成功");
     }
 
     /**
@@ -88,10 +88,10 @@ public class CategoryController {
      * @return
      */
     @DeleteMapping
-    public Result<String> delete(Long id) {
+    public R<String> delete(Long id) {
         //categoryService.removeById(id);   这个是框架自带的，无法满足我们的场景，在删除前得称判断是否关联了菜品或套餐。有则不许删除
         categoryService.remove(id);
-        return Result.success("分类信息删除成功");
+        return R.success("分类信息删除成功");
     }
 }
 

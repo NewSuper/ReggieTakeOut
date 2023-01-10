@@ -1,6 +1,6 @@
 package cn.tqxd.reggie.controller;
 
-import cn.tqxd.reggie.vo.Result;
+import cn.tqxd.reggie.entity.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +31,7 @@ public class CommonController {
      * @return
      */
     @PostMapping("/upload")
-    public Result<String> upload(MultipartFile file) {
+    public R<String> upload(MultipartFile file) {
         //file是一个临时文件，需要转存到指定位置，否则本次请求完成后临时文件会删除
         log.info(file.toString());
 
@@ -57,7 +57,7 @@ public class CommonController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Result.success(fileName);
+        return R.success(fileName);
     }
 
     /**

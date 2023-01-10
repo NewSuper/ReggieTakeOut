@@ -1,7 +1,7 @@
 package cn.tqxd.reggie.service.impl;
 
 import cn.tqxd.reggie.entity.*;
-import cn.tqxd.reggie.exception.CustomException;
+import cn.tqxd.reggie.utils.exception.CustomException;
 import cn.tqxd.reggie.mapper.OrderMapper;
 import cn.tqxd.reggie.service.*;
 import cn.tqxd.reggie.utils.BaseContext;
@@ -20,49 +20,31 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implements OrderService {
-
+    @Autowired
     private ShoppingCartService shoppingCartService;
-
+    @Autowired
     private UserService userService;
-
+    @Autowired
     private AddressBookService addressBookService;
 
+    @Autowired
     private OrderDetailService orderDetailService;
-
-    @Autowired
-    public void setShoppingCartService(ShoppingCartService shoppingCartService) {
-        this.shoppingCartService = shoppingCartService;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setAddressBookService(AddressBookService addressBookService) {
-        this.addressBookService = addressBookService;
-    }
-
-    @Autowired
-    public void setOrderDetailService(OrderDetailService orderDetailService) {
-        this.orderDetailService = orderDetailService;
-    }
 
     /**
      * 用户下单
+     *
      * @param orders
      */
     @Transactional
     @Override
     public void submit(Orders orders) {
-
+        //获取当前登录用户id
         Long userId = BaseContext.getCurrentId();
-
-        LambdaQueryWrapper<ShoppingCart>wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(ShoppingCart::getUserId,userId);
+        //查询当前用户的购物车数据
+        LambdaQueryWrapper<ShoppingCart> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ShoppingCart::getUserId, userId);
         List<ShoppingCart> shoppingCarts = shoppingCartService.list(wrapper);
-        if (shoppingCarts == null || shoppingCarts.size()==0){
+        if (shoppingCarts == null || shoppingCarts.size() == 0) {
             throw new CustomException("购物车为空，不能下单");
         }
         User user = userService.getById(userId);
@@ -70,13 +52,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         //查询地址数据
         Long addressBookId = orders.getAddressBookId();
         AddressBook addressBook = addressBookService.getById(addressBookId);
-        if (addressBook == null){
+        if (addressBook == null) {
             throw new CustomException("用户地址信息有误，不能下单");
         }
-        long orderId = IdWorker.getId();
-
-        AtomicInteger amount = new AtomicInteger(0);
-        List<OrderDetail>orderDetails = shoppingCarts.stream().map((item)->{
+        long orderId = IdWorker.getId();//订单号
+        AtomicInteger amount = new AtomicInteger(0);//AtomicInteger，原子操作，可保证线程安全，高并发
+        List<OrderDetail> orderDetails = shoppingCarts.stream().map((item) -> {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderId(orderId);
             orderDetail.setNumber(item.getNumber());
@@ -91,7 +72,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         }).collect(Collectors.toList());
 
         orders.setId(orderId);
-        orders.setOrderTime(LocalDateTime.now());
+        orders.setOrderTime(LocalDateTime.now());  //时间相关，可根据实际情况来定
         orders.setCheckoutTime(LocalDateTime.now());
         orders.setStatus(2);
         //总金额

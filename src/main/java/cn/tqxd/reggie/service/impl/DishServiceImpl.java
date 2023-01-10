@@ -18,12 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
-    private DishFlavorService dishFlavorService;
-
     @Autowired
-    public void setDishFlavorService(DishFlavorService dishFlavorService) {
-        this.dishFlavorService = dishFlavorService;
-    }
+    private DishFlavorService dishFlavorService;
 
     /**
      * 新增菜品，同时保存对应的口味数据

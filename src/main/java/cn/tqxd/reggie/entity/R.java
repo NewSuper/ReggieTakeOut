@@ -1,4 +1,4 @@
-package cn.tqxd.reggie.vo;
+package cn.tqxd.reggie.entity;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class Result<T> {
+public class R<T> {
     /**
      * 编码：1成功 0或其它数字均为失败
      */
@@ -24,21 +24,21 @@ public class Result<T> {
      */
     private Map<String, Object> map = new HashMap<>();
 
-    public static <T> Result<T> success(T object) {
-        Result<T> r = new Result<>();
+    public static <T> R<T> success(T object) {
+        R<T> r = new R<>();
         r.data = object;
         r.code = 1;
         return r;
     }
 
-    public static <T> Result<T> error(String msg) {
-        Result<T> r = new Result<>();
+    public static <T> R<T> error(String msg) {
+        R<T> r = new R<>();
         r.msg = msg;
         r.code = 0;
         return r;
     }
 
-    public Result<T> add(String key, Object value) {
+    public R<T> add(String key, Object value) {
         this.map.put(key, value);
         return this;
     }

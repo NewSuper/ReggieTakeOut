@@ -13,7 +13,7 @@ public class RedisConfig  extends CachingConfigurerSupport {
     @Bean
     public RedisTemplate<Object,Object> redisTemplate(RedisConnectionFactory connectionFactory){
         RedisTemplate<Object,Object>redisTemplate = new RedisTemplate<>();
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());//处理乱码的。序列化
         redisTemplate.setConnectionFactory(connectionFactory);
         return redisTemplate;
     }

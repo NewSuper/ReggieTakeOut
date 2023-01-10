@@ -1,4 +1,4 @@
-package cn.tqxd.reggie.exception;
+package cn.tqxd.reggie.utils.exception;
 
 /**
  * 自定义业务异常

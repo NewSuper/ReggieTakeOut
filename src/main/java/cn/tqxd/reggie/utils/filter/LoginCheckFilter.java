@@ -1,7 +1,7 @@
-package cn.tqxd.reggie.filter;
+package cn.tqxd.reggie.utils.filter;
 
 import cn.tqxd.reggie.utils.BaseContext;
-import cn.tqxd.reggie.vo.Result;
+import cn.tqxd.reggie.entity.R;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
@@ -87,7 +87,7 @@ public class LoginCheckFilter implements Filter{
 
         log.info("用户未登录");
         //5 如果未登录则返回未登录结果，通过输出流的方式向客户端响应数据
-        response.getWriter().write(JSON.toJSONString(Result.error("NOTLOGIN")));
+        response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
         return;
     }
 
