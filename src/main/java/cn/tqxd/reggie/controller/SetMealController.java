@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +25,11 @@ import java.util.stream.Collectors;
 
 /**
  * 新增套餐交互过程：
- *  1.页面（backend/page/combo/add.html）发ajax请求，请求服务端获取套餐分类并展示到下拉框
- *  2.页面发送ajax 请求，请求服务端获取菜品分类并展示到添加菜品窗口中‘
- *  3.页面发ajax 请求，请求服务端，根据菜品分类查询对应菜品并展示
- *  4.图片上传。下载并回显
- *  5.点击保存，发ajax 。将套餐数据以json形式提交
+ * 1.页面（backend/page/combo/add.html）发ajax请求，请求服务端获取套餐分类并展示到下拉框
+ * 2.页面发送ajax 请求，请求服务端获取菜品分类并展示到添加菜品窗口中‘
+ * 3.页面发ajax 请求，请求服务端，根据菜品分类查询对应菜品并展示
+ * 4.图片上传。下载并回显
+ * 5.点击保存，发ajax 。将套餐数据以json形式提交
  */
 @RestController
 @Slf4j
@@ -38,19 +40,6 @@ public class SetMealController {
     private SetMealService setMealService;
     @Autowired
     private CategoryService categoryService;
-
-    /**
-     * 新增套餐
-     *
-     * @param setMealDto
-     * @return
-     */
-    @PostMapping
-    public R<String> save(@RequestBody SetMealDto setMealDto) {
-        log.info("套餐信息：{}", setMealDto);
-        setMealService.saveWithDish(setMealDto);
-        return R.success("新增套餐成功");
-    }
 
     /**
      * 套餐管理分页
@@ -88,27 +77,47 @@ public class SetMealController {
     }
 
     /**
+     * 新增套餐
+     *
+     * @param setMealDto
+     * @return
+     */
+    @PostMapping
+    @CacheEvict(value = "setmealCache", allEntries = true) //默认为false
+    public R<String> save(@RequestBody SetMealDto setMealDto) {
+        log.info("套餐信息：{}", setMealDto);
+        setMealService.saveWithDish(setMealDto);
+        return R.success("新增套餐成功");
+    }
+
+    /**
      * 删除套餐。同时需要删除套餐和菜品的关联数据
+     *
      * @param ids
      * @return
      */
     @DeleteMapping
-    public R<String> delete(@RequestParam List<Long>ids){
-        log.info("ids:{}",ids);
+
+    @CacheEvict(value = "setmealCache", allEntries = true) //默认为false
+    public R<String> delete(@RequestParam List<Long> ids) {
+        log.info("ids:{}", ids);
         setMealService.removeWithDish(ids);
         return R.success("删除套餐成功");
     }
 
     /**
      * 根据条件查询套餐数据
-     * @param setMeal
+     *
+     * @param setmeal
      * @return
      */
     @GetMapping("/list")
-    public R<List<SetMeal>>list(SetMeal setMeal){
+
+    @Cacheable(value = "setmealCache", key = "#setMeal.categoryId + ‘_’ + #setmeal.status")
+    public R<List<SetMeal>> list(SetMeal setmeal) {
         LambdaQueryWrapper<SetMeal> queryWrapper = new LambdaQueryWrapper();
-        queryWrapper.eq(setMeal.getCategoryId()!= null,SetMeal::getCategoryId,setMeal.getCategoryId());
-        queryWrapper.eq(setMeal.getStatus()!= null,SetMeal::getStatus,setMeal.getStatus());
+        queryWrapper.eq(setmeal.getCategoryId() != null, SetMeal::getCategoryId, setmeal.getCategoryId());
+        queryWrapper.eq(setmeal.getStatus() != null, SetMeal::getStatus, setmeal.getStatus());
         queryWrapper.orderByDesc(SetMeal::getUpdateTime);
         List<SetMeal> list = setMealService.list(queryWrapper);
         return R.success(list);

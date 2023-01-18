@@ -2,11 +2,12 @@ package cn.tqxd.reggie.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class R<T> {
+public class R<T> implements Serializable {  //使用springcache 后，运行后无法序列化-->implements Serializable
     /**
      * 编码：1成功 0或其它数字均为失败
      */
